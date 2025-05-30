@@ -1,0 +1,20 @@
+name: quick_car_sales
+description: Aplikacja ogłoszeń samochodowych w Flutter
+version: 1.0.0+1
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sqflite: ^2.2.8+4
+  path: ^1.8.3
+  path_provider: ^2.1.1
+  image_picker: ^1.0.4
+  cupertino_icons: ^1.0.2
+  shared_preferences: ^2.2.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
