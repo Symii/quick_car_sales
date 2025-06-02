@@ -1,12 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import '../models/car_ad.dart';
 
 class CarTile extends StatelessWidget {
   final CarAd carAd;
+  final String? firstImagePath;
 
-  CarTile({required this.carAd});
+  CarTile({required this.carAd, this.firstImagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +23,14 @@ class CarTile extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.horizontal(left: Radius.circular(12)),
             ),
-            child: Image.file(
-              File(carAd.imagePath),
+            child: firstImagePath != null
+                ? Image.file(
+              File(firstImagePath!),
               fit: BoxFit.cover,
+            )
+                : Container(
+              color: Colors.grey[300],
+              child: Icon(Icons.car_repair, color: Colors.grey[700]),
             ),
           ),
           Expanded(
@@ -54,7 +59,7 @@ class CarTile extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

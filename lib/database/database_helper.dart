@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/car_ad.dart';
+import '../models/car_image.dart';
 import '../models/user_profile.dart';
 
 class DatabaseHelper {
@@ -10,7 +11,7 @@ class DatabaseHelper {
   DatabaseHelper._init();
 
   Future<Database> get database async {
-    if (_database != null) return _database!;
+    if (_database != null && _database!.isOpen) return _database!;
     _database = await _initDB('car_ads.db');
     return _database!;
   }
@@ -18,7 +19,39 @@ class DatabaseHelper {
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: _createDB,
+    );
+  }
+
+  Future<void> resetDatabase() async {
+    if (_database != null && _database!.isOpen) {
+      await _database!.close();
+      _database = null;
+    }
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'car_ads.db');
+    final exists = await databaseExists(path);
+    if (exists) {
+      await deleteDatabase(path);
+      print('Baza danych usunięta');
+    }
+    _database = await _initDB('car_ads.db');
+  }
+
+  Future<CarAd?> getCarAdById(int id) async {
+    final db = await instance.database;
+    final result = await db.query(
+      'car_ads',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (result.isNotEmpty) {
+      return CarAd.fromMap(result.first);
+    }
+    return null;
   }
 
   Future _createDB(Database db, int version) async {
@@ -32,8 +65,16 @@ class DatabaseHelper {
         mileage TEXT,
         price TEXT,
         description TEXT,
-        imagePath TEXT,
         isFavorite INTEGER
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE car_images (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        carAdId INTEGER,
+        imagePath TEXT,
+        FOREIGN KEY (carAdId) REFERENCES car_ads (id) ON DELETE CASCADE
       )
     ''');
 
@@ -91,5 +132,18 @@ class DatabaseHelper {
       return UserProfile.fromMap(result.first);
     }
     return null;
+  }
+
+  Future<void> insertCarImages(List<CarImage> images) async {
+    final db = await instance.database;
+    for (var image in images) {
+      await db.insert('car_images', image.toMap());
+    }
+  }
+
+  Future<List<CarImage>> getCarImages(int carAdId) async {
+    final db = await instance.database;
+    final result = await db.query('car_images', where: 'carAdId = ?', whereArgs: [carAdId]);
+    return result.map((e) => CarImage.fromMap(e)).toList();
   }
 }

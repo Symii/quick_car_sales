@@ -5,7 +5,7 @@ import 'screens/profile_screen.dart';
 import 'screens/add_car_screen.dart';
 import 'themes/app_theme.dart';
 
-void main() {
+void main() async {
   runApp(CarMarketplaceApp());
 }
 
@@ -42,14 +42,14 @@ class _MainNavigationState extends State<MainNavigation> {
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Ogłoszenia'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Ulubione'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Obserwowane'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Konto'),
         ],
         onTap: (index) => setState(() => _currentIndex = index),
       ),
       floatingActionButton: _currentIndex == 0
           ? Padding(
-        padding: const EdgeInsets.only(bottom: 80), // przesunięcie w górę o 10
+        padding: const EdgeInsets.only(bottom: 80),
         child: FloatingActionButton(
           onPressed: () {
             Navigator.push(

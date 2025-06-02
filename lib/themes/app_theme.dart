@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 final ThemeData appTheme = ThemeData(
-  colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
+  colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
   scaffoldBackgroundColor: Colors.grey[50],
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.white,
@@ -9,7 +9,7 @@ final ThemeData appTheme = ThemeData(
     elevation: 0,
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    selectedItemColor: Colors.greenAccent,
+    selectedItemColor: Colors.blueAccent,
     unselectedItemColor: Colors.grey,
   ),
   cardTheme: CardTheme(

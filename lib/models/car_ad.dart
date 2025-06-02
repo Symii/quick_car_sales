@@ -7,7 +7,6 @@ class CarAd {
   String mileage;
   String price;
   String description;
-  String imagePath;
   bool isFavorite;
 
   CarAd({
@@ -19,7 +18,6 @@ class CarAd {
     required this.mileage,
     required this.price,
     required this.description,
-    required this.imagePath,
     this.isFavorite = false,
   });
 
@@ -33,7 +31,6 @@ class CarAd {
       'mileage': mileage,
       'price': price,
       'description': description,
-      'imagePath': imagePath,
       'isFavorite': isFavorite ? 1 : 0,
     };
   }
@@ -48,7 +45,6 @@ class CarAd {
       mileage: map['mileage'],
       price: map['price'],
       description: map['description'],
-      imagePath: map['imagePath'],
       isFavorite: map['isFavorite'] == 1,
     );
   }

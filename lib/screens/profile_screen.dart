@@ -46,7 +46,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         SnackBar(content: Text('Profil zapisany!')),
       );
 
-      // Odśwież profile po zapisie
       loadProfile();
     }
   }
@@ -91,8 +90,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onPressed: saveProfile,
                 child: Text('Zapisz'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.greenAccent,
-                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.blueAccent,
+                  foregroundColor: Colors.white,
                   minimumSize: Size(double.infinity, 50),
                 ),
               ),
